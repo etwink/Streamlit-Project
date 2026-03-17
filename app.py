@@ -42,6 +42,8 @@ st.markdown(
     .user-bubble    { background: #0084ff; color: white; border-bottom-right-radius: 2px; }
     .assistant-bubble { background: #f0f2f6; color: #262730; border-bottom-left-radius: 2px; }
     .role-label     { font-size: 0.75rem; color: #888; margin-bottom: 2px; }
+    /* Hide the text_input label (label_visibility param not available in 1.12) */
+    .chat-input-label label { display: none; }
     </style>
     """,
     unsafe_allow_html=True,
@@ -85,11 +87,13 @@ st.markdown("---")
 # Without a form, every keystroke would trigger a re-run.
 with st.form(key="chat_form", clear_on_submit=True):
     # clear_on_submit=True empties the text field after the form is submitted.
+    # label_visibility was added in 1.13.0 — we hide the label via CSS instead.
+    st.markdown('<div class="chat-input-label">', unsafe_allow_html=True)
     user_input = st.text_input(
         "Your message",
         placeholder="Type a message and press Enter…",
-        label_visibility="collapsed",   # hides the label but keeps accessibility
     )
+    st.markdown("</div>", unsafe_allow_html=True)
     submitted = st.form_submit_button("Send")
 
 # ── Handle submission ──────────────────────────────────────────────────────────
