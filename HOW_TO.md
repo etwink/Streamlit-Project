@@ -113,12 +113,16 @@ if "messages" not in st.session_state:
 st.session_state.messages.append({"role": "user", "content": "Hello"})
 ```
 
-### Chat widgets
+### Chat widgets (Streamlit 1.12.0)
+> `st.chat_input` and `st.chat_message` are **not available** until 1.18.0.
+> The app uses the following equivalents instead:
+
 | Widget | Purpose |
 |--------|---------|
-| `st.chat_input("placeholder")` | Pinned input bar at the bottom; returns the submitted string or `None` |
-| `st.chat_message("user")` / `st.chat_message("assistant")` | Renders a message bubble with an avatar |
-| `st.markdown(text)` | Renders Markdown inside a message bubble |
+| `st.form(key, clear_on_submit=True)` | Groups widgets so the script only re-runs on submit, not every keystroke |
+| `st.text_input("label")` | Single-line message input inside the form |
+| `st.form_submit_button("Send")` | Submit button; returns `True` on the run it is clicked |
+| `st.markdown(html, unsafe_allow_html=True)` | Used to render styled message bubbles via inline HTML/CSS |
 | `st.spinner("text")` | Shows a loading indicator while your backend runs |
 
 ### Sidebar & misc
@@ -126,7 +130,7 @@ st.session_state.messages.append({"role": "user", "content": "Hello"})
 |--------|---------|
 | `st.sidebar` | Context manager for the collapsible left panel |
 | `st.button("label")` | Returns `True` only on the run where it was clicked |
-| `st.rerun()` | Forces an immediate re-run (used after clearing history) |
+| `st.experimental_rerun()` | Forces an immediate re-run — this is the 1.12.0 name (renamed to `st.rerun()` in 1.27) |
 | `st.expander("label")` | Collapsible section — great for debug output |
 
 ---
